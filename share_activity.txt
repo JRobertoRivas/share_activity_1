@@ -1,1 +1,23 @@
-﻿
+﻿
+
+Para mi proyecto de ingeniería estoy haciendo un robot que utiliza visión para robots para localizar frutos y recolectarlos. La parte de reconocimiento de objetos en CV tiene muchos ángulos desde los cuales se puede abordar un mismo proceso.
+
+En mi primer intento utiliza un clasificador llamado Haar que utiliza un algoritmo de aprendizaje de máquina para extraer rasgos positivos de imágenes ‘positivas’ que sean del objeto que se desea identificar, y también asigna rasgos ‘negativos’ de imágenes que sean distintas al objetivo. 
+
+El proceso de entrenamiento usa un kernel convolucional, cada rasgo es un número simple que se toma de la suma del valor de los pixeles aplicando varias máscaras en distintas escalas.
+
+Las máscaras utilizadas son las mostradas en la Figura 1
+
+
+(Figura  1 Haar Masks)
+
+La mascara se superpone en la imagen y se suman los pixeles, esto se realiza para cada imagen y es especialmente tardado ya que por ejemplo: para una imagen de 24x24 se pueden extraer hasta 160,000 rasgos de la imagen, de los cuales la mayoría son inservibles. 
+
+(Figura  2 Rasgos identificados)
+
+En la Figura 2 podemos ver que se identificaron dos rasgos que se centran en que el área de los ojos es mas oscura que la frente y que la nariz utilizando dos máscaraas de rasgos lineales.
+
+Este proceso es tardado de entrenar y de aplicar para clasificar por lo que se utiliza un algoritmo de optimización llamado Adaboost que toma como principio el siguiente: Se sabe que en una imagen positiva, la mayor parte de la imagen no algo que queramos identificar. Entonces probabilistamente se retroalimenta el entrenamiento para aplicar rasgos antes encontrados, de modo que el proceso se acorte. Por ejemplo si las caras suelen están en el centro de la imagen, a cierta escala se empieza con una máscara que sea de cierto tamaño promedio tomado de iteraciones anteriores.
+
+Lo que hice yo fue entrenar un Haar Cascade durante tres días y obtuve como resultado peppers.xml que es el haar-cascade
+
